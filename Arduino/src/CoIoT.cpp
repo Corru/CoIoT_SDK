@@ -18,13 +18,18 @@ CoIoT::CoIoT(char* device_name, char* user_name, Client& eth_client)
       eth_client(eth_client) {}
 CoIoT::CoIoT(char* device_name, Client& eth_client)
     : client_id(device_name), eth_client(eth_client) {}
-
+void CoIoT::resubAll() {
+    for (uint16_t i = 0; i < topicLength; ++i) {
+        client.subscribe(topics[i]);
+    }
+}
 int CoIoT::reconnect() {
     if (!client.connected()) {
         Serial.println("Connecting to MQTT server"); // TODO Delete
         if (client.connect(client_id)) {
             Serial.println("Connected to MQTT server"); // TODO Delete
             client.setCallback(callback);
+            resubAll();
             return true;
         } else {
             Serial.println("Could not connect to MQTT server");
@@ -70,8 +75,8 @@ void CoIoT::on(const char* topic, TCallbackHandlerFunction function) {
         // Already exist
     } else {
         client.subscribe(topic);
+        topics[topicLength++] = topic;
     }
-    
 };
 
 void CoIoT::callback(char* topic, byte* payload, unsigned int length) {
