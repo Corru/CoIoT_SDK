@@ -1,0 +1,16 @@
+{
+    "name": "CoIoT",
+    "keywords": "PubSubClient, mqtt, iot",
+    "description": "CoIoT is a difficult system with many different parts. This wrapper contribute like a part of SDK. ",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Corru/CoIoT_SDK"
+    },
+    "version": "0.1",
+    "examples": "examples/*/*.ino",
+    "frameworks": "arduino",
+    "platforms": [
+        "atmelavr",
+        "espressif"
+    ]
+}
